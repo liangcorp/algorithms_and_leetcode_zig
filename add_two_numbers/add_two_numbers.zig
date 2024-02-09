@@ -5,7 +5,7 @@ const Node = struct {
     next: ?*Node = null,
 };
 
-pub fn add_last(head: *Node, x: i32) void {
+pub fn add_last(head: *Node, x: i32) !void {
     var new_node = Node{
         .x = x,
         .next = null,
@@ -14,27 +14,30 @@ pub fn add_last(head: *Node, x: i32) void {
     var node = head;
 
     while (node.next) |next| {
-        node = next;
+        std.debug.print("{d}\n", .{node.x});
+        node.* = next.*;
     }
 
     node.next = &new_node;
 }
 
-pub fn display(head: *Node) void {
+pub fn display(head: *Node) !void {
     var node = head;
 
+    std.debug.print("{d}\n", .{node.x});
+
     while (node.next) |next| {
-        std.debug.print("{}\n", .{node.x});
+        std.debug.print("{d}\n", .{next.x});
         node = next;
     }
 }
 
 pub fn main() !void {
     var head = Node{ .x = 9, .next = null };
-    add_last(&head, 10);
-    add_last(&head, 11);
-    add_last(&head, 12);
-    add_last(&head, 13);
+    try add_last(&head, 10);
+    try add_last(&head, 11);
+    try add_last(&head, 12);
+    try add_last(&head, 13);
 
-    display(&head);
+    // try display(&head);
 }
