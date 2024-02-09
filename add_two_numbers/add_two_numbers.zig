@@ -5,30 +5,29 @@ const Node = struct {
     next: ?*Node = null,
 };
 
-pub fn add_last(head: *Node, x: i32) !void {
+pub fn add_last(node: *Node, x: i32) !void {
     var new_node = Node{
         .x = x,
         .next = null,
     };
 
-    var node = head;
+    var c_node = node;
 
-    while (node.next) |next| {
-        std.debug.print("{d}\n", .{node.x});
-        node.* = next.*;
+    while (c_node.next) |next| {
+        c_node = next;
     }
+    std.debug.print("{d}\n", .{c_node.x});
 
-    node.next = &new_node;
+    c_node.next = &new_node;
 }
 
-pub fn display(head: *Node) !void {
-    var node = head;
+pub fn display(node: *Node) !void {
+    var c_node = node;
 
-    std.debug.print("{d}\n", .{node.x});
-
-    while (node.next) |next| {
-        std.debug.print("{d}\n", .{next.x});
-        node = next;
+    std.debug.print("{d}\n", .{c_node.x});
+    while (c_node.next) |next| {
+        c_node = next;
+        std.debug.print("{d}\n", .{c_node.x});
     }
 }
 
