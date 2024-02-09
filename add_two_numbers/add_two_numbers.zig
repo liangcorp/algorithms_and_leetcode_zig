@@ -6,24 +6,29 @@ const Node = struct {
 };
 
 pub fn add_last(head: *Node, x: i32) void {
-    const new_node = Node{
+    var new_node = Node{
         .x = x,
         .next = null,
     };
 
-    // while (true) {
-    //     head = head.next orelse return;
-    // }
-    head.next = &new_node;
+    var node = head;
+
+    while (node.next) |next| {
+        node = next;
+    }
+
+    node.next = &new_node;
 }
 
 pub fn display(head: *Node) void {
     var node = head;
-    while (true) {
+
+    while (node.next) |next| {
         std.debug.print("{}\n", .{node.x});
-        node = node.next orelse return;
+        node = next;
     }
 }
+
 pub fn main() !void {
     var head = Node{ .x = 9, .next = null };
     add_last(&head, 10);
